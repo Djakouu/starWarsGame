@@ -18,7 +18,7 @@ export const lunchTime = (time=121000) => {
 }
 
 export const stopTime = () => {
-    if (document.getElementById("timeLeftInput").value != "TIME OUT!") {
+    if (document.getElementById("timeLeftInput").value != "TIME'S UP!") {
         clearInterval(timer);
         document.getElementById("timeLeftInput").value = "02:00"
         document.getElementById("timeLeftInput").style.color = "green"

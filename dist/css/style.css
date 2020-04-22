@@ -16,10 +16,121 @@ html {
       font-size: 50%; } }
 
 body {
-  display: flex;
-  flex-direction: row;
+  position: relative;
 }
   
+#rules {
+  background-color: #ccc;
+  height: 90vh;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+}
+
+#rulesImg {
+  height: 30%;
+  width: 100%;
+}
+
+#rulesText {
+  align-items: center;
+  display: flex;
+  height: 60%;
+  position: relative;
+  width: 100%;
+}
+
+#rulesAd {
+  margin-left: 2rem;
+  width: 80%;
+}
+
+#rulesAdTitle {
+  font-size: 4rem;
+  margin-left: -1rem;
+}
+
+p {
+  display: inline;
+  font-size: 2rem;
+}
+
+.rulesEnemiesImg {
+  height: 4rem;
+  transform: translate(0, 1rem);
+  width: 4rem;
+}
+
+#ruleAd1 {
+  display: none;
+}
+
+#ruleAd2 {
+  display: none;
+}
+
+#ruleAd3 {
+  display: none;
+}
+
+#ruleAd4 {
+  
+}
+
+#ruleNb {
+  margin-left: 3rem;
+}
+
+.ruleNb {
+  color: rgb(218, 156, 2);
+  display: inline;
+  font-size: 7rem;
+  margin: left;
+}
+
+#ruleNb1 {
+
+}
+
+#ruleNb2 {
+  visibility: hidden;
+}
+
+#ruleNb3 {
+  visibility: hidden;
+}
+
+#rulesButtons {
+  display: flex;
+  height: 10%;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#previousRule, #skipRules, #nextRule {
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin: 1rem;
+  padding: 3px 9px;
+  text-align: center;
+  width: 8rem;
+}
+
+#previousRule {
+  visibility: hidden;
+}
+
+#game {
+  visibility: hidden;
+  display: flex;
+}
+
 #playground  {
   background-image: url("/img/sw3.jpg");
   height: 100vh;

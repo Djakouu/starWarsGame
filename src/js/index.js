@@ -10,15 +10,16 @@
 // end of the Game : done
     // time out done
     // 0 enemies done
+// Git done
 //
+// Rules
 // Transition fade in start
 // Robot class
-// Rules
 // Change robot speed !
 // Sound effects
-// Git
 // Heroku/ mywebsite
-// 
+// Responsive
+
 
 import Position from "./models/Position"
 import Robot from "./models/Robot"
@@ -92,7 +93,7 @@ export const game = new class {
   }
 
   startOver() {
-    if (document.getElementById("timeLeftInput").value == "TIME OUT!")
+    if (document.getElementById("timeLeftInput").value == "TIME'S UP!")
       document.getElementById("timeLeftInput").value = "02:00"
     this.run=true;
     main(0, true)
@@ -115,7 +116,7 @@ export const game = new class {
 
   update(tFrame) {
     // Stop the game if time out
-    if (document.getElementById("timeLeftInput").value == "TIME OUT!") 
+    if (document.getElementById("timeLeftInput").value == "TIME'S UP!") 
       this.stop();
     // Stop the game if this.enemies.length = 0
     if (this.robot && this.enemies.length <= ((this.level-1)*2)+1) {
@@ -336,3 +337,48 @@ window.onkeyup = (k) => {
       game.run=false;
   }
 }
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+document.getElementById("nextRule").onclick = () => {
+  // Show "previousRule" button
+  document.getElementById("previousRule").style.visibility = "visible";
+  // Update rules number
+  const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML);
+  document.getElementById("ruleNb").innerHTML = ruleNb+1;
+  // Hide "nextRule" button if last page
+  if (ruleNb+1 == 4)
+    document.getElementById("nextRule").style.visibility = "hidden";
+  // Toggle rule page
+  document.getElementById("ruleAd"+ruleNb).style.display = "none";
+  document.getElementById("ruleAd"+(ruleNb+1)).style.display = "inline";
+}
+
+document.getElementById("previousRule").onclick = () => {
+  // Show "nextRule" button
+  document.getElementById("nextRule").style.visibility = "visible"
+  // Update rules number
+  const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML)
+  document.getElementById("ruleNb").innerHTML = ruleNb-1;
+  // Hide "previousRule" button if first page
+  if (ruleNb-1 == 1)
+    document.getElementById("previousRule").style.visibility = "hidden"
+  // Toggle rule page
+  document.getElementById("ruleAd"+ruleNb).style.display = "none";
+  document.getElementById("ruleAd"+(ruleNb-1)).style.display = "inline";
+}
+
+
+
+
+
+
+
+
+
+
+
+

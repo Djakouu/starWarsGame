@@ -12,31 +12,124 @@
     </head>
 
     <body>
-        <div id="playground">
-            <!-- <img id="R2D2" src="./img/favicon.png" /> -->
-            <div id="endGame">
-                <h1 id="you"></h1>
-                <h2 id="your"></h2>
-                <h2 id="finalScore"></h2>
+        <div id="rules">
+            <img id="rulesImg" src="./img/sw1.png" />
+            <div id="rulesText">
+                <div id="rulesAd">
+                    <h1 id="rulesAdTitle">Rules of the Game:</h1>
+                    <div id="ruleAd1">
+                        <p>You are </p>
+                        <img class="rulesEnemiesImg" src="./img/R2D2.png" />
+                        <p>and your goal is to tear down all your enemies within <b>2 minutes</b> flat</p><br />
+                        <p>Your <b>enemies</b> are : Anakin</p>
+                        <img class="rulesEnemiesImg" src="./img/anakin_starfighter.png" />
+                        <p>, Naboo</p>
+                        <img class="rulesEnemiesImg" src="./img/naboo_starfighter.png" />
+                        <p>, Obi_wan</p>
+                        <img class="rulesEnemiesImg" src="./img/obi_wan_starfighter.png" />
+                        <p> and X_Wing</p>
+                        <img class="rulesEnemiesImg" src="./img/x_wing.png" /> <br /><br /><br />
+                        <p>Once you catch them you mark <b>3 points</b> and they <b>vanish</b></p> <br />
+                        <p>Your worst enemy is <b>DarthVader</b></p>
+                        <img class="rulesEnemiesImg" src="./img/darthvader.png" /> <br /><br /><br />
+                        <p>Try to catch it and you will lose <b>4 points</b>. Plus, he is <b>Immortal</b></p>    
+                    </div>
+                    <div id="ruleAd2">
+                        <br />
+                        <p>If you do not <b>exterminate</b> your enemies before the <b>time is up</b> you lose</p>
+                        <br /><br /><br />
+                        <p>If you do <b>exterminate</b> them <b>within the time</b> your final score will be:</p>
+                        <br /><br /><br />
+                        <p>The <b>points marked</b> + <b>the third of the remaining time</b></p>
+                        <br /><br /><br />
+                        <p>You got it! <b>3 seconds are worht 1 point</b></p>
+                        <br /><br /><br />
+                        <p>If your final score is <b>negative</b> or <b>equals to zero</b>, you <b>lose</b></p>
+                        <br /><br /><br />
+                        <p>If it is <b>posivite</b>, you can guess, you <b>win!</b></p>
+                    </div>
+                    <div id="ruleAd3">
+                        <br />
+                        <h1>Examples:</h1>
+                        <br /><br />
+                        <p>You marked <b>10 points</b> and the remaining time is <b>30 seconds</b></p>
+                        <br />
+                        <p>Your final score is (10 + 30/3) = <b>20 points</b></p>
+                        <br /><br /><br />
+                        <p>You marked <b>-8 points</b> and the remaining time is <b>35 seconds</b></p>
+                        <br />
+                        <p>Your final score is (-8 + 35/3) = <b>3 points</b></p>
+                        <br /><br /><br />
+                        <p>You marked <b>-4 points</b> and the remaining time is <b>10 seconds</b></p>
+                        <br />
+                        <p>Your final score is (-4 + 10/3) = <b>-1 point</b></p>
+                    </div>
+                    <div id="ruleAd4">
+                        <div class="form__group u-margin-bottom-medium">
+                            <div class="form__radio-group">
+                                <input type="radio" class="form__radio-input" id="small" name="size">
+                                <label for="small" class="form__radio-lable">
+                                    <span class="form__radio-button"></span>
+                                    Level 1, easy
+                                </label>
+                            </div>
+
+                            <div class="form__radio-group">
+                                <input type="radio" class="form__radio-input" id="large" name="size">
+                                <label for="large" class="form__radio-lable">
+                                    <span class="form__radio-button"></span>
+                                    Level 2, peasy
+                                </label>
+                            </div>
+                            <div class="form__radio-group">
+                                <input type="radio" class="form__radio-input" id="large" name="size">
+                                <label for="large" class="form__radio-lable">
+                                    <span class="form__radio-button"></span>
+                                    Level 3, lemon squeezy
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="rulesNb">
+                    <h1 class="ruleNb" id="ruleNb">1</h1>
+                    <h1 class="ruleNb">/3</h1>
+                </div>
+                
             </div>
-            <div id="copyright"> &copy; by Mohamed Kimouche, 04/2020 </div>
+            <div id="rulesButtons">
+                <button id="previousRule">Previous</button>
+                <button id="skipRules">Skip</button>
+                <button id="nextRule">Next</button>
+            </div>
         </div>
-        <div id="controlPanel">
-            <div>
-                <button id="previousLevel">Previous level</button>
+        <div id="game">
+            <div id="playground">
+                <!-- <img id="R2D2" src="./img/favicon.png" /> -->
+                <div id="endGame">
+                    <h1 id="you"></h1>
+                    <h2 id="your"></h2>
+                    <h2 id="finalScore"></h2>
+                </div>
+                <div id="copyright"> &copy; by Mohamed Kimouche, 04/2020 </div>
             </div>
-            <div>
-                <h1  id="level" >Level:</h1>
-                <input type="text" id="levelInput" value="" autocomplete="off">
-                <h1  id="timeLeft" >Time left:</h1>
-                <input type="text" id="timeLeftInput" value="02:00" autocomplete="off">
-                <h1 id="score">Score:</h1>
-                <input type="text" id="scoreInput" value="0" autocomplete="off">
-                <button id="start" class="animated heartBeat">Start</button>
-                <button id="pause" class="animated heartBeat">Pause</button>
-            </div>
-            <div>
-                <button id="nextLevel">Next level</button>
+            <div id="controlPanel">
+                <div>
+                    <button id="previousLevel">Previous level</button>
+                </div>
+                <div>
+                    <h1  id="level" >Level:</h1>
+                    <input type="text" id="levelInput" value="" autocomplete="off">
+                    <h1  id="timeLeft" >Time left:</h1>
+                    <input type="text" id="timeLeftInput" value="02:00" autocomplete="off">
+                    <h1 id="score">Score:</h1>
+                    <input type="text" id="scoreInput" value="0" autocomplete="off">
+                    <button id="start" class="animated heartBeat">Start</button>
+                    <button id="pause" class="animated heartBeat">Pause</button>
+                </div>
+                <div>
+                    <button id="nextLevel">Next level</button>
+                </div>
             </div>
         </div>
     </body>
