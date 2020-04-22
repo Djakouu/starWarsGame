@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700" rel="stylesheet">
+        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+        <title>Star Wars</title>
+    </head>
+
+    <body>
+        <div id="playground">
+            <!-- <img id="R2D2" src="./img/favicon.png" /> -->
+            <div id="endGame">
+                <h1 id="you"></h1>
+                <h2 id="your"></h2>
+                <h2 id="finalScore"></h2>
+            </div>
+            <div id="copyright"> &copy; by Mohamed Kimouche, 04/2020 </div>
+        </div>
+        <div id="controlPanel">
+            <div>
+                <button id="previousLevel">Previous level</button>
+            </div>
+            <div>
+                <h1  id="level" >Level:</h1>
+                <input type="text" id="levelInput" value="" autocomplete="off">
+                <h1  id="timeLeft" >Time left:</h1>
+                <input type="text" id="timeLeftInput" value="02:00" autocomplete="off">
+                <h1 id="score">Score:</h1>
+                <input type="text" id="scoreInput" value="0" autocomplete="off">
+                <button id="start" class="animated heartBeat">Start</button>
+                <button id="pause" class="animated heartBeat">Pause</button>
+            </div>
+            <div>
+                <button id="nextLevel">Next level</button>
+            </div>
+        </div>
+    </body>
+</html>

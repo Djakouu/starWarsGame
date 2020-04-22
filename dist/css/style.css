@@ -1,0 +1,119 @@
+* {
+  margin: 0;
+  padding: 0;
+ }
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+  @media only screen and (max-width: 68.75em) {
+    html {
+      font-size: 50%; } }
+
+body {
+  display: flex;
+  flex-direction: row;
+}
+  
+#playground  {
+  background-image: url("/img/sw3.jpg");
+  height: 100vh;
+  position: relative;
+  width: 80vw;
+}
+
+#endGame {
+  background-color: white;
+  border-radius: 15px;
+  font-size: 3rem;
+  left: 50%;
+  padding: 4rem;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+}
+
+#copyright {
+  font-size: 15px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+#controlPanel {
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+  height: 100vh;
+  justify-content: space-between;
+  margin: auto;
+  text-align: center;
+}
+
+#timeLeft {
+  
+}
+
+#timeLeftInput {
+  color: green;
+}
+
+#score {
+
+}
+
+#scoreInput, #timeLeftInput, #levelInput {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: block;
+  font-size: large;
+  margin: 2rem auto 2rem auto;
+  text-align: center;
+  font-weight: bold;
+  padding: 12px 20px;
+  width: 50%;
+}
+
+#start, #pause, #previousLevel, #nextLevel {
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 16px 30px;
+  text-align: center;
+}
+#start, #pause {
+  background-color: #d11919da;
+  margin-top: 3rem;
+}
+
+#pause {
+  display: none;
+}
+
+#previousLevel, #nextLevel {
+  font-size: 1.5rem;
+  /* width: 50%; */
+}
+  
+#start:hover, #pause:hover, #previousLevel:hover, #nextLevel:hover {
+  background-color: black;
+  color: white;
+}
+
+
