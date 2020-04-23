@@ -12,7 +12,7 @@ let countDownTime;
 let timer;
 let timeLeft;
 
-export const lunchTime = (time=121000) => {
+export const lunchTime = (time=8000) => {
     countDownTime = new Date().getTime() + time;
     timer = setInterval(myTimer, 1000);
 }
@@ -45,7 +45,7 @@ const myTimer = () => {
     // If the count down is over, write some text 
     if (timeLeft <= 0) {
         clearInterval(timer);
-        document.getElementById("timeLeftInput").value = "TIME OUT!";
+        document.getElementById("timeLeftInput").value = "TIME'S UP!";
     } 
     else {
         // Output the result 

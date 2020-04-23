@@ -49,7 +49,7 @@ export const updateRobotPosition = (arrows, robot) => {
     const robotY1 = robot.getPos().y;
     const robotY2 = robotY1 + parseInt(document.getElementById(robot.id).style.height);
     let move;
-    const step = 1;
+    const step = 10;
     if (arrows[0]) {
         if (robotX1 - step >= 0)
             move = {stepX: -step, stepY: 0}

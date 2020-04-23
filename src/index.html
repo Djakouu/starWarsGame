@@ -14,80 +14,93 @@
     <body>
         <div id="rules">
             <img id="rulesImg" src="./img/sw1.png" />
+            <h1 id="rulesAdTitle">Rules of the Game:</h1>
             <div id="rulesText">
                 <div id="rulesAd">
-                    <h1 id="rulesAdTitle">Rules of the Game:</h1>
                     <div id="ruleAd1">
-                        <p>You are </p>
+                        <br />
+                        <p>You are 
                         <img class="rulesEnemiesImg" src="./img/R2D2.png" />
-                        <p>and your goal is to tear down all your enemies within <b>2 minutes</b> flat</p><br />
-                        <p>Your <b>enemies</b> are : Anakin</p>
+                        and your goal is to tear down all your enemies within <b>2 minutes</b> flat</p>
+                        <br />
+                        <p>Your <b>enemies</b> are : Anakin
                         <img class="rulesEnemiesImg" src="./img/anakin_starfighter.png" />
-                        <p>, Naboo</p>
+                        , Naboo
                         <img class="rulesEnemiesImg" src="./img/naboo_starfighter.png" />
-                        <p>, Obi_wan</p>
+                        , Obi_wan
                         <img class="rulesEnemiesImg" src="./img/obi_wan_starfighter.png" />
-                        <p> and X_Wing</p>
-                        <img class="rulesEnemiesImg" src="./img/x_wing.png" /> <br /><br /><br />
-                        <p>Once you catch them you mark <b>3 points</b> and they <b>vanish</b></p> <br />
-                        <p>Your worst enemy is <b>DarthVader</b></p>
-                        <img class="rulesEnemiesImg" src="./img/darthvader.png" /> <br /><br /><br />
-                        <p>Try to catch it and you will lose <b>4 points</b>. Plus, he is <b>Immortal</b></p>    
+                        and X_Wing
+                        <img class="rulesEnemiesImg" src="./img/x_wing.png" /></p>
+                        <br /><br /><p>&nbsp;</p><br />
+                        <p>Once you catch one of them, he <b>vanishes</b> and you mark <b>3 points</b></p>
+                        <br /><br />
+                        <p>Your worst enemy is <b>DarthVader</b>
+                        <img class="rulesEnemiesImg" src="./img/darthvader.png" />
+                        <br /><br />
+                        <p>Try to catch it and you will lose <b>5 points</b>. Plus, he is <b>Immortal</b></p>    
                     </div>
                     <div id="ruleAd2">
-                        <br />
+                        <br /><p>&nbsp;</p>
                         <p>If you do not <b>exterminate</b> your enemies before the <b>time is up</b> you lose</p>
-                        <br /><br /><br />
+                        <br /><br /><br /><p>&nbsp;</p>
                         <p>If you do <b>exterminate</b> them <b>within the time</b> your final score will be:</p>
-                        <br /><br /><br />
+                        <br /><br /><br /><p>&nbsp;</p>
                         <p>The <b>points marked</b> + <b>the third of the remaining time</b></p>
-                        <br /><br /><br />
+                        <br /><br /><br /><p>&nbsp;</p>
                         <p>You got it! <b>3 seconds are worht 1 point</b></p>
-                        <br /><br /><br />
+                        <br /><br /><br /><p>&nbsp;</p>
                         <p>If your final score is <b>negative</b> or <b>equals to zero</b>, you <b>lose</b></p>
-                        <br /><br /><br />
+                        <br /><br /><br /><p>&nbsp;</p>
                         <p>If it is <b>posivite</b>, you can guess, you <b>win!</b></p>
                     </div>
                     <div id="ruleAd3">
-                        <br />
+                        <br /><p>&nbsp;</p>
                         <h1>Examples:</h1>
-                        <br /><br />
+                        <br /><br /><p>&nbsp;</p>
                         <p>You marked <b>10 points</b> and the remaining time is <b>30 seconds</b></p>
                         <br />
                         <p>Your final score is (10 + 30/3) = <b>20 points</b></p>
-                        <br /><br /><br />
+                        <br /><br /><br /><p>&nbsp;</p>
                         <p>You marked <b>-8 points</b> and the remaining time is <b>35 seconds</b></p>
                         <br />
                         <p>Your final score is (-8 + 35/3) = <b>3 points</b></p>
-                        <br /><br /><br />
+                        <br /><br /><br /><p>&nbsp;</p>
                         <p>You marked <b>-4 points</b> and the remaining time is <b>10 seconds</b></p>
                         <br />
                         <p>Your final score is (-4 + 10/3) = <b>-1 point</b></p>
                     </div>
                     <div id="ruleAd4">
-                        <div class="form__group u-margin-bottom-medium">
-                            <div class="form__radio-group">
-                                <input type="radio" class="form__radio-input" id="small" name="size">
-                                <label for="small" class="form__radio-lable">
-                                    <span class="form__radio-button"></span>
-                                    Level 1, easy
-                                </label>
-                            </div>
-
-                            <div class="form__radio-group">
-                                <input type="radio" class="form__radio-input" id="large" name="size">
-                                <label for="large" class="form__radio-lable">
-                                    <span class="form__radio-button"></span>
-                                    Level 2, peasy
-                                </label>
-                            </div>
-                            <div class="form__radio-group">
-                                <input type="radio" class="form__radio-input" id="large" name="size">
-                                <label for="large" class="form__radio-lable">
-                                    <span class="form__radio-button"></span>
-                                    Level 3, lemon squeezy
-                                </label>
-                            </div>
+                        <div id="pickLevel">
+                            <h1 id="pickLevelTitle">Pick a level:</h1>
+                            <br />
+                            <form>
+                                <div class="pickLevelRadio">
+                                    <input type="radio" class="pickLevelRadioInput" id="easy" name="level" value="1" checked>
+                                    <label for="easy" class="pickLevelRadioLable">
+                                        <span class="pickLevelRadioButton"></span>
+                                        Level 1, easy
+                                    </label>
+                                </div>
+                                <br />
+                                <div class="pickLevelRadio">
+                                    <input type="radio" class="pickLevelRadioInput" id="peasy" name="level" value="2">
+                                    <label for="peasy" class="pickLevelRadioLable">
+                                        <span class="pickLevelRadioButton"></span>
+                                        Level 2, peasy
+                                    </label>
+                                </div>
+                                <br />
+                                <div class="pickLevelRadio">
+                                    <input type="radio" class="pickLevelRadioInput" id="lemon_squeezy" name="level" value="3">
+                                    <label for="lemon_squeezy" class="pickLevelRadioLable">
+                                        <span class="pickLevelRadioButton"></span>
+                                        Level 3, lemon squeezy
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="animated tada" id="ready">
+                            <button id="ready">Ready!</button>
                         </div>
                     </div>
                 </div>
@@ -98,7 +111,7 @@
                 
             </div>
             <div id="rulesButtons">
-                <button id="previousRule">Previous</button>
+                <button id="previousRule" disabled>Previous</button>
                 <button id="skipRules">Skip</button>
                 <button id="nextRule">Next</button>
             </div>
@@ -108,7 +121,9 @@
                 <!-- <img id="R2D2" src="./img/favicon.png" /> -->
                 <div id="endGame">
                     <h1 id="you"></h1>
+                    <br />
                     <h2 id="your"></h2>
+                    <br />
                     <h2 id="finalScore"></h2>
                 </div>
                 <div id="copyright"> &copy; by Mohamed Kimouche, 04/2020 </div>

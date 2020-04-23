@@ -6,13 +6,12 @@
 // game.startover() function done
 // toggle buttons on buttons handler done
 // "next/previous level" buttons done
-//
+// Git done
+// Rules done
 // end of the Game : done
     // time out done
     // 0 enemies done
-// Git done
 //
-// Rules
 // Transition fade in start
 // Robot class
 // Change robot speed !
@@ -116,33 +115,45 @@ export const game = new class {
 
   update(tFrame) {
     // Stop the game if time out
-    if (document.getElementById("timeLeftInput").value == "TIME'S UP!") 
+    if (document.getElementById("timeLeftInput").value == "TIME'S UP!") {
       this.stop();
-    // Stop the game if this.enemies.length = 0
+      document.getElementById("you").innerHTML = "GAME OVER!";
+      document.getElementById("your").innerHTML = "Time's up";
+      document.getElementById("finalScore").innerHTML = "";
+      document.getElementById("endGame").style.visibility = "visible"
+    }
+
+    // Stop the game if no more enemies
     if (this.robot && this.enemies.length <= ((this.level-1)*2)+1) {
     //((this.level-1)*2)+1): means 1 darthvader left for level 1,
     // Three darthvader for level 2 and 5 darthvader for level 3
-      const lastTime = document.getElementById("timeLeftInput").value
+      let lastTime = document.getElementById("timeLeftInput").value
       const lastScore = document.getElementById("scoreInput").value
       this.stop();
       document.getElementById("timeLeftInput").value = lastTime;
       document.getElementById("scoreInput").value = lastScore;
-      let finaleScore; // equals to (lastScore + lastTime div 3) so every 3 seconds make a point
-      if (!lastTime.includes(":")) {
-        finaleScore = parseInt(lastScore) + Math.trunc(parseInt(lastTime)/3);
-        if (finaleScore > 0) {
-          document.getElementById("you").innerHTML = "YOU WON!"
-          document.getElementById("your").innerHTML = "Your final score is:"
-          document.getElementById("finalScore").innerHTML = finaleScore
-          document.getElementById("endGame").style.visibility = "visible"
-        }
-        else { // finaleScore <= 0
-          document.getElementById("you").innerHTML = "You lost!"
-          document.getElementById("your").innerHTML = "Your final score is:"
-          document.getElementById("finalScore").innerHTML = finaleScore
-          document.getElementById("endGame").style.visibility = "visible"
-        }
+      let finalScore; // equals to (lastScore + lastTime div 3) so every 3 seconds make a point
+      if (lastTime.includes(":")) { //lastTime > 30 seconds
+        lastTime = lastTime.split(":");
+        const minutes = parseInt(lastTime[0]);
+        const seconds = parseInt(lastTime[1]);
+        finalScore = parseInt(lastScore) + Math.trunc(((minutes*60)+seconds)/3);
       }
+      else //lastTime < 30 seconds
+        finalScore = parseInt(lastScore) + Math.trunc(parseInt(lastTime)/3);
+      if (finalScore > 0) {
+        document.getElementById("you").innerHTML = "YOU WON!"
+        document.getElementById("your").innerHTML = "Final score:"
+        document.getElementById("finalScore").innerHTML = finalScore
+        document.getElementById("endGame").style.visibility = "visible"
+      }
+      else { // finalScore <= 0
+        document.getElementById("you").innerHTML = "You lost!"
+        document.getElementById("your").innerHTML = "Final score:"
+        document.getElementById("finalScore").innerHTML = finalScore
+        document.getElementById("endGame").style.visibility = "visible"
+      }
+      
     }
     // Update the game according to the time
     let lap = tFrame - this.tFrameLast ;//< 20 ? tFrame - this.tFrameLast : 17;
@@ -190,7 +201,7 @@ export const game = new class {
           // Update score
           if (!this.touched) {
             this.touched = true;
-            this.score -= 3;
+            this.score -= 5;
             controlPanelView.updateScore(this.score);
             setTimeout(() => {
                 this.touched = false;
@@ -241,8 +252,6 @@ document.getElementById("nextLevel").onclick = () => {
 document.getElementById("start").onclick = () => {
   const innerHTML = document.getElementById("start").innerHTML
   if (innerHTML == "Start") {
-    game.level=2;
-    document.getElementById("levelInput").value = "2/3"
     // Start the game
     game.start(); 
   }
@@ -345,33 +354,243 @@ window.onkeyup = (k) => {
 ////////////////////////////////////////////////////////////////////
 document.getElementById("nextRule").onclick = () => {
   // Show "previousRule" button
-  document.getElementById("previousRule").style.visibility = "visible";
-  // Update rules number
+  document.getElementById("previousRule").disabled = false;
+  document.getElementById("previousRule").style.cursor = "pointer";
+  document.getElementById("previousRule").style.opacity = "1";
+  // Update rules number and its animation
   const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML);
-  document.getElementById("ruleNb").innerHTML = ruleNb+1;
-  // Hide "nextRule" button if last page
-  if (ruleNb+1 == 4)
-    document.getElementById("nextRule").style.visibility = "hidden";
+  document.getElementById("ruleNb").style.animation = "fadeOutDown 0.75s ease-out 0.75s";
+  document.getElementById("ruleNb").style.animationFillMode = "backwards"; 
+  let elm = document.getElementById("ruleNb");
+  let newone = elm.cloneNode(true);
+  elm.parentNode.replaceChild(newone, elm);
+  setTimeout(() => {
+    document.getElementById("ruleNb").style.animation = "fadeInDown 0.75s ease-out 0.75s";
+    document.getElementById("ruleNb").style.animationFillMode = "backwards"; 
+    document.getElementById("ruleNb").innerHTML = ruleNb+1;
+  }, 1000)
   // Toggle rule page
-  document.getElementById("ruleAd"+ruleNb).style.display = "none";
-  document.getElementById("ruleAd"+(ruleNb+1)).style.display = "inline";
+    document.getElementById("ruleAd"+ruleNb).style.opacity = "0";
+    document.getElementById("ruleAd"+ruleNb).style.animation = "zoomOut 0.75s ease-out 0.75s";
+    document.getElementById("ruleAd"+ruleNb).style.animationFillMode = "backwards"; 
+    // elm = document.getElementById("ruleAd"+ruleNb);
+    // newone = elm.cloneNode(true);
+    // elm.parentNode.replaceChild(newone, elm);
+
+    setTimeout(() => {
+      document.getElementById("ruleAd"+ruleNb).style.display = "none";
+    }, 1000)
+
+  document.getElementById("ruleAd"+(ruleNb+1)).style.animation = "slideInLeft 0.75s ease-out 0.75s";
+  document.getElementById("ruleAd"+(ruleNb+1)).style.animationFillMode = "backwards"; 
+  // elm = document.getElementById("ruleAd"+(ruleNb+1));
+  // newone = elm.cloneNode(true);
+  // elm.parentNode.replaceChild(newone, elm);
+  setTimeout(() => {
+    document.getElementById("ruleAd"+(ruleNb+1)).style.display = "flex";
+    setTimeout(() => {
+      document.getElementById("ruleAd"+(ruleNb+1)).style.opacity = "1";
+    }, 700)
+  }, 1000)
+
+  // Hide "nextRule" button, "skipRules" button, "rulesAd title" and "rulesNb" if last page
+  if (ruleNb+1 == 4) {
+    // Hide "nextRule" button
+    document.getElementById("nextRule").disabled = true;
+    document.getElementById("nextRule").style.cursor = "auto";
+    document.getElementById("nextRule").style.opacity = "0";
+    // Hide "skipRules" button
+    document.getElementById("skipRules").disabled = true;
+    document.getElementById("skipRules").style.cursor = "auto";
+    document.getElementById("skipRules").style.opacity = "0";
+    // Hide "RulesAdTitle"
+    document.getElementById("rulesAdTitle").style.opacity = "0";
+    document.getElementById("rulesAdTitle").style.animation = "zoomOut 0.75s ease-out 0.75s";
+    document.getElementById("rulesAdTitle").style.animationFillMode = "backwards"; 
+    // elm = document.getElementById("rulesAdTitle");
+    // newone = elm.cloneNode(true);
+    // elm.parentNode.replaceChild(newone, elm);
+    // Hide "rulesNb"
+    document.getElementById("rulesNb").style.opacity = "0";
+    document.getElementById("rulesNb").style.animation = "zoomOut 0.75s ease-out 0.75s";
+    document.getElementById("rulesNb").style.animationFillMode = "backwards"; 
+    // elm = document.getElementById("rulesNb");
+    // newone = elm.cloneNode(true);
+    // elm.parentNode.replaceChild(newone, elm);
+
+    // Flex instead of inline for pick a level page
+    document.getElementById("ruleAd"+(ruleNb+1)).style.animation = "slideInLeft 0.75s ease-out 0.75s";
+    document.getElementById("ruleAd"+(ruleNb+1)).style.animationFillMode = "backwards"; 
+    // elm = document.getElementById("ruleAd"+(ruleNb+1));
+    // newone = elm.cloneNode(true);
+    // elm.parentNode.replaceChild(newone, elm);
+    setTimeout(() => {
+      document.getElementById("ruleAd"+(ruleNb+1)).style.display = "flex";
+      setTimeout(() => {
+        document.getElementById("ruleAd"+(ruleNb+1)).style.opacity = "1";
+      }, 700)
+    }, 1000);
+  }
 }
 
 document.getElementById("previousRule").onclick = () => {
-  // Show "nextRule" button
-  document.getElementById("nextRule").style.visibility = "visible"
-  // Update rules number
-  const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML)
-  document.getElementById("ruleNb").innerHTML = ruleNb-1;
+  let elm, newone;
+  const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML);
+  // Update rules number and its animation
+    document.getElementById("ruleNb").style.animation = "fadeOutUp 0.75s ease-out 0.75s";
+    document.getElementById("ruleNb").style.animationFillMode = "backwards"; 
+    elm = document.getElementById("ruleNb");
+    newone = elm.cloneNode(true);
+    elm.parentNode.replaceChild(newone, elm);
+  
+    setTimeout(() => {
+      document.getElementById("ruleNb").style.animation = "fadeInUp 0.75s ease-out 0.75s";
+      document.getElementById("ruleNb").style.animationFillMode = "backwards"; 
+      document.getElementById("ruleNb").innerHTML = ruleNb-1;
+    }, 1000)
+  
   // Hide "previousRule" button if first page
-  if (ruleNb-1 == 1)
-    document.getElementById("previousRule").style.visibility = "hidden"
+  if (ruleNb-1 == 1) {
+    document.getElementById("previousRule").disabled = true;
+    document.getElementById("previousRule").style.cursor = "auto";
+    document.getElementById("previousRule").style.opacity = "0";
+  }
   // Toggle rule page
-  document.getElementById("ruleAd"+ruleNb).style.display = "none";
-  document.getElementById("ruleAd"+(ruleNb-1)).style.display = "inline";
+  document.getElementById("ruleAd"+ruleNb).style.animation = "slideOutLeft 0.75s ease-out 0.75s";
+  document.getElementById("ruleAd"+ruleNb).style.animationFillMode = "backwards"; 
+  // elm = document.getElementById("ruleAd"+ruleNb);
+  // newone = elm.cloneNode(true);
+  // elm.parentNode.replaceChild(newone, elm);
+  setTimeout(() => {
+    document.getElementById("ruleAd"+ruleNb).style.opacity = "0";
+    document.getElementById("ruleAd"+ruleNb).style.display = "none";
+  }, 1000)
+  document.getElementById("ruleAd"+(ruleNb-1)).style.animation = "zommIn 0.75s ease-out 0.75s";
+  document.getElementById("ruleAd"+(ruleNb-1)).style.animationFillMode = "backwards"; 
+  // elm = document.getElementById("ruleAd"+(ruleNb-1));
+  // newone = elm.cloneNode(true);
+  // elm.parentNode.replaceChild(newone, elm);
+  setTimeout(() => {
+    document.getElementById("ruleAd"+(ruleNb-1)).style.display = "flex";
+    setTimeout(() => {
+      document.getElementById("ruleAd"+(ruleNb-1)).style.opacity = "1";
+    }, 700)
+  }, 1000)
+  // Show "nextRule" button, "skipRules" button, "rulesAd title" and "rulesNb" if last page
+  if (ruleNb-1 == 3) {
+    // Show "nextRule" button
+    document.getElementById("nextRule").disabled = false;
+    document.getElementById("nextRule").style.cursor = "pointer";
+    document.getElementById("nextRule").style.opacity = "1";
+    //
+    // Show "skipRules" button
+    document.getElementById("skipRules").disabled = false;
+    document.getElementById("skipRules").style.cursor = "pointer";
+    document.getElementById("skipRules").style.opacity = "1";
+    // Show "rulesAdTilte"
+    document.getElementById("rulesAdTitle").style.opacity = "1";
+    document.getElementById("rulesAdTitle").style.animation = "zoomIn 0.75s ease-out 0.75s";
+    document.getElementById("rulesAdTitle").style.animationFillMode = "backwards"; 
+    // elm = document.getElementById("rulesAdTitle");
+    // newone = elm.cloneNode(true);
+    // elm.parentNode.replaceChild(newone, elm);
+    // Show "rulesNb"
+    document.getElementById("rulesNb").style.opacity = "1";
+    document.getElementById("rulesNb").style.animation = "zoomIn 0.75s ease-out 0.75s";
+    document.getElementById("rulesNb").style.animationFillMode = "backwards"; 
+    elm = document.getElementById("rulesNb");
+    // newone = elm.cloneNode(true);
+    // elm.parentNode.replaceChild(newone, elm);
+    // document.getElementById("ruleNb").innerHTML = ruleNb-1;
+
+  }
+}
+
+document.getElementById("skipRules").onclick = () => {
+  let elm, newone;
+  const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML);
+  // Show "previousRule" button
+  document.getElementById("previousRule").disabled = false;
+  document.getElementById("previousRule").style.cursor = "pointer";
+  document.getElementById("previousRule").style.opacity = "1";
+  // Hide "nextRule" and "skipRules" buttons
+  document.getElementById("skipRules").disabled = true;
+  document.getElementById("skipRules").style.cursor = "auto";
+  document.getElementById("skipRules").style.opacity = "0";
+
+  document.getElementById("nextRule").disabled = true;
+  document.getElementById("nextRule").style.cursor = "auto";
+  document.getElementById("nextRule").style.opacity = "0";
+
+  // Hide "RulesAdTitle"
+  document.getElementById("rulesAdTitle").style.opacity = "0";
+  document.getElementById("rulesAdTitle").style.animation = "zoomOut 0.75s ease-out 0.75s";
+  document.getElementById("rulesAdTitle").style.animationFillMode = "backwards"; 
+  // elm = document.getElementById("rulesAdTitle");
+  // newone = elm.cloneNode(true);
+  // elm.parentNode.replaceChild(newone, elm);
+
+  // Hide "rulesNb"
+  document.getElementById("rulesNb").style.opacity = "0";
+  document.getElementById("rulesNb").style.animation = "zoomOut 0.75s ease-out 0.75s";
+  document.getElementById("rulesNb").style.animationFillMode = "backwards"; 
+
+  // elm = document.getElementById("rulesNb");
+  // newone = elm.cloneNode(true);
+  // elm.parentNode.replaceChild(newone, elm);
+
+  // Toggle rule page
+  document.getElementById("ruleAd"+ruleNb).style.opacity = "0";
+  document.getElementById("ruleAd"+ruleNb).style.animation = "zoomOut 0.75s ease-out 0.75s";
+  document.getElementById("ruleAd"+ruleNb).style.animationFillMode = "backwards"; 
+  // elm = document.getElementById("ruleAd"+ruleNb);
+  // newone = elm.cloneNode(true);
+  // elm.parentNode.replaceChild(newone, elm);
+
+  setTimeout(() => {
+    document.getElementById("ruleAd"+ruleNb).style.display = "none";
+    document.getElementById("ruleNb").innerHTML = 4;
+  }, 1000)
+
+  document.getElementById("ruleAd4").style.animation = "slideInLeft 0.75s ease-out 0.75s";
+  document.getElementById("ruleAd4").style.animationFillMode = "backwards"; 
+  // elm = document.getElementById("ruleAd4");
+  // newone = elm.cloneNode(true);
+  // elm.parentNode.replaceChild(newone, elm);
+  setTimeout(() => {
+    document.getElementById("ruleAd4").style.display = "flex";
+    setTimeout(() => {
+      document.getElementById("ruleAd4").style.opacity = "1";
+    }, 700)
+  }, 1000)
+}
+
+document.getElementById("ready").onclick = () => {
+  console.log("ran")
+  // Set game.level according to the form
+  game.level = parseInt(getRadioCheckedValue("level"));
+  document.getElementById("levelInput").value = game.level + "/3"
+  //Hide "previousLevel" or "nextLevel" buttons if game.level = 1 or 3 respectively
+  if (game.level == 1)
+    document.getElementById("previousLevel").style.visibility = "hidden";
+  else if (game.level == 3)
+    document.getElementById("nextLevel").style.visibility = "hidden";
+  //
+  document.getElementById("rules").style.display = "none";
+  //
+  document.getElementById("game").style.visibility = "visible";
 }
 
 
+const getRadioCheckedValue = radio_name => {
+  const oRadio = document.forms[0].elements[radio_name];
+  for (let i = 0; i < oRadio.length; i++) {
+    if (oRadio[i].checked) {
+      return oRadio[i].value;
+    }
+  }
+  return '';
+}
 
 
 
