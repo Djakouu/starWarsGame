@@ -1,35 +1,24 @@
-export const elements = {
-    searchForm: document.querySelector('.search'),
-    searchInput: document.querySelector('.search__field'),
-    searchRes: document.querySelector('.results'),
-    searchResList: document.querySelector('.results__list'),
-    searchResPages: document.querySelector('.results__pages'),
-    recipe: document.querySelector('.recipe'),
-    shopping: document.querySelector('.shopping__list'),
-    likesMenu: document.querySelector('.likes__field'),
-    unlikeBtn: document.querySelector('.likes__empty--field'),
-    likesList: document.querySelector('.likes__list'),
-    unlike: document.querySelector('.likes__unlike--icon'),
-    shoppingItem: document.querySelectorAll('.shopping__item')
-    
-};
+// export const elements = {
+//     timeLeftInput: document.getElementById("timeLeftInput"),
+//     you: document.getElementById("you"),
+//     your: document.getElementById("your"),
+//     finalScore: document.getElementById("finalScore"),
+//     endGame: document.getElementById("endGame"),
+//     scoreInput: document.getElementById("scoreInput"),
+//     previousLevel: document.getElementById("previousLevel"),
+//     levelInput: document.getElementById("levelInput"),
+//     nextLevel: document.getElementById("nextLevel"),    
+//     start: document.getElementById("start"),
+//     pause: document.getElementById("pause"),
+//     nextRule: document.getElementById("nextRule"),
+//     previousRule: document.getElementById("previousRule"),
+//     skipRules: document.getElementById("skipRules"),
+//     ruleNb: document.getElementById("ruleNb"),
+//     ready: document.getElementById("ready"),
+//     rules: document.getElementById("rules"),
+//     game: document.getElementById("game")
+// };
 
-export const elementStrings = {
-    loader: 'loader'
-};
-
-export const renderLoader = parent => {
-    const loader = `
-        <div class="${elementStrings.loader}">
-            <svg>
-                <use href="img/icons.svg#icon-cw"></use>
-            </svg>
-        </div>
-    `;
-    parent.insertAdjacentHTML('afterbegin', loader);
-};
-
-export const clearLoader = () => {
-    const loader = document.querySelector(`.${elementStrings.loader}`);
-    if (loader) loader.parentElement.removeChild(loader);
-};
+export const elements = elementId => {
+    return document.getElementById(elementId);
+}

@@ -12,7 +12,7 @@ let countDownTime;
 let timer;
 let timeLeft;
 
-export const lunchTime = (time=8000) => {
+export const lunchTime = (time=121000) => {
     countDownTime = new Date().getTime() + time;
     timer = setInterval(myTimer, 1000);
 }
@@ -83,16 +83,27 @@ export const toggleButtons = action => {
         document.getElementById("start").innerHTML = "Stop";
         // Show pause button
         document.getElementById("pause").style.animation = "none";
-        document.getElementById("pause").style.display = "inline";
+        document.getElementById("pause").style.display = "flex";
+        setTimeout(() => {
+            document.getElementById("pause").style.opacity = "1";
+        }, 300);
+
     }
     else if (action == "stop") {
-        // Toogle to "Start over" button
-        document.getElementById("start").innerHTML = "Start over";
-        // Reset animation
-        document.getElementById("start").style.animation = "heartBeat 5s infinite";
+       
         // Toggle to Pause button and hide it
         document.getElementById("pause").innerHTML = "Pause";
-        document.getElementById("pause").style.display = "none";
+        document.getElementById("pause").style.opacity = "0";
+        setTimeout(() => {
+            document.getElementById("pause").style.display = "none";
+        }, 300);
+        
+         // Toogle to "Start over" button
+         setTimeout(() => {
+            document.getElementById("start").innerHTML = "Start over";
+            document.getElementById("start").style.animation = "heartBeat 5s infinite";
+        }, 300);
+        // Reset animation
     }
     else if (action == "pause") {
         // Chenge innerHTML

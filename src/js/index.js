@@ -12,7 +12,7 @@
     // time out done
     // 0 enemies done
 //
-// Transition fade in start
+// Transition fade in start  done half
 // Robot class
 // Change robot speed !
 // Sound effects
@@ -26,6 +26,8 @@ import * as spriteView from "./views/spriteView"
 import * as positionView from "./views/positionView"
 import * as controlPanelView from "./views/controlPanelView"
 import * as startGame from "./startGame"
+import * as transition from "./views/transition"
+import { elements } from "./views/base"
 
 export const game = new class {
   constructor(
@@ -64,7 +66,6 @@ export const game = new class {
   }
 
   stop() {
-    console.log("stop")
     game.run=false;
     // Remove the robot
     const elem = document.getElementById(this.robot.id);
@@ -72,8 +73,7 @@ export const game = new class {
     this.robot = null;
     // Remove enemies
     this.enemies.forEach(enemy => {
-      const elem = document.getElementById(enemy.id);
-      elem.parentNode.removeChild(elem);
+      spriteView.removeSprite(enemy.id)
     })
     this.enemies=[];
     // reset Arrows
@@ -92,8 +92,9 @@ export const game = new class {
   }
 
   startOver() {
-    if (document.getElementById("timeLeftInput").value == "TIME'S UP!")
-      document.getElementById("timeLeftInput").value = "02:00"
+    transition.hideElements(["endGame"], "fadeOut");
+    if (elements("timeLeftInput").value == "TIME'S UP!")
+      elements("timeLeftInput").value = "02:00"
     this.run=true;
     main(0, true)
     this.start(); 
@@ -115,44 +116,48 @@ export const game = new class {
 
   update(tFrame) {
     // Stop the game if time out
-    if (document.getElementById("timeLeftInput").value == "TIME'S UP!") {
+    if (elements("timeLeftInput").value == "TIME'S UP!") {
       this.stop();
-      document.getElementById("you").innerHTML = "GAME OVER!";
-      document.getElementById("your").innerHTML = "Time's up";
-      document.getElementById("finalScore").innerHTML = "";
-      document.getElementById("endGame").style.visibility = "visible"
+      elements("you").innerHTML = "GAME OVER!";
+      elements("your").innerHTML = "Time's up";
+      elements("finalScore").innerHTML = "";
+      transition.showElements(["endGame"], "fadeIn");
     }
 
     // Stop the game if no more enemies
     if (this.robot && this.enemies.length <= ((this.level-1)*2)+1) {
     //((this.level-1)*2)+1): means 1 darthvader left for level 1,
     // Three darthvader for level 2 and 5 darthvader for level 3
-      let lastTime = document.getElementById("timeLeftInput").value
-      const lastScore = document.getElementById("scoreInput").value
-      this.stop();
-      document.getElementById("timeLeftInput").value = lastTime;
-      document.getElementById("scoreInput").value = lastScore;
-      let finalScore; // equals to (lastScore + lastTime div 3) so every 3 seconds make a point
-      if (lastTime.includes(":")) { //lastTime > 30 seconds
-        lastTime = lastTime.split(":");
-        const minutes = parseInt(lastTime[0]);
-        const seconds = parseInt(lastTime[1]);
-        finalScore = parseInt(lastScore) + Math.trunc(((minutes*60)+seconds)/3);
-      }
-      else //lastTime < 30 seconds
-        finalScore = parseInt(lastScore) + Math.trunc(parseInt(lastTime)/3);
-      if (finalScore > 0) {
-        document.getElementById("you").innerHTML = "YOU WON!"
-        document.getElementById("your").innerHTML = "Final score:"
-        document.getElementById("finalScore").innerHTML = finalScore
-        document.getElementById("endGame").style.visibility = "visible"
-      }
-      else { // finalScore <= 0
-        document.getElementById("you").innerHTML = "You lost!"
-        document.getElementById("your").innerHTML = "Final score:"
-        document.getElementById("finalScore").innerHTML = finalScore
-        document.getElementById("endGame").style.visibility = "visible"
-      }
+      let lastTime = elements("timeLeftInput").value
+      const lastScore = elements("scoreInput").value
+      setTimeout(() => {
+        this.stop();
+        elements("timeLeftInput").value = lastTime;
+        elements("scoreInput").value = lastScore;
+        let finalScore; // equals to (lastScore + lastTime div 3) so every 3 seconds make a point
+        if (lastTime.includes(":")) { //lastTime > 30 seconds
+          lastTime = lastTime.split(":");
+          const minutes = parseInt(lastTime[0]);
+          const seconds = parseInt(lastTime[1]);
+          finalScore = parseInt(lastScore) + Math.trunc(((minutes*60)+seconds)/3);
+        }
+        else //lastTime < 30 seconds
+          finalScore = parseInt(lastScore) + Math.trunc(parseInt(lastTime)/3);
+        if (finalScore > 0) {
+          elements("you").innerHTML = "YOU WON!"
+          elements("your").innerHTML = "Final score:"
+          elements("finalScore").innerHTML = finalScore
+          transition.showElements(["endGame"], "fadeIn");
+
+        }
+        else { // finalScore <= 0
+          elements("you").innerHTML = "You lost!"
+          elements("your").innerHTML = "Final score:"
+          elements("finalScore").innerHTML = finalScore
+          transition.showElements(["endGame"], "fadeIn");
+        }
+      }, 200);
+      
       
     }
     // Update the game according to the time
@@ -225,32 +230,35 @@ export const game = new class {
 // }
 
 // Changing level
-document.getElementById("previousLevel").onclick = () => {
-  document.getElementById("endGame").style.visibility = "hidden"
-  if (game.run && game.robot)
-    game.stop();
-  game.level -= 1;
-  document.getElementById("levelInput").value = game.level + "/3"
-  if (game.level == 1)
-    document.getElementById("previousLevel").style.visibility = "hidden"
-  if (game.level < 3)
-    document.getElementById("nextLevel").style.visibility = "visible"
-}
-document.getElementById("nextLevel").onclick = () => {
-  document.getElementById("endGame").style.visibility = "hidden"
+elements("nextLevel").onclick = () => {
+  transition.hideElements(["endGame"], "fadeOut")
   if (game.run && game.robot)
     game.stop();
   game.level += 1;
-  document.getElementById("levelInput").value = game.level + "/3"
+  elements("levelInput").value = game.level + "/3"
   if (game.level == 3)
-    document.getElementById("nextLevel").style.visibility = "hidden"
+    transition.hideButton("nextLevel");
   if (game.level > 1)
-    document.getElementById("previousLevel").style.visibility = "visible"
+    transition.showButton("previousLevel");
 }
 
+elements("previousLevel").onclick = () => {
+  transition.hideElements(["endGame"], "fadeOut")
+  if (game.run && game.robot)
+    game.stop();
+  game.level -= 1;
+  elements("levelInput").value = game.level + "/3"
+  if (game.level == 1)
+    transition.hideButton("previousLevel");
+  if (game.level < 3)
+    transition.showButton("nextLevel");
+}
+
+
+
 // Starting and stopping the game by clicking on the button "Start" or "Stop"
-document.getElementById("start").onclick = () => {
-  const innerHTML = document.getElementById("start").innerHTML
+elements("start").onclick = () => {
+  const innerHTML = elements("start").innerHTML
   if (innerHTML == "Start") {
     // Start the game
     game.start(); 
@@ -260,16 +268,15 @@ document.getElementById("start").onclick = () => {
   }
   else { // innerHTML == "Start over"
     // Restart the game, the animation and the time
-    document.getElementById("endGame").style.visibility = "hidden"
     game.startOver();
   }
 };
 
 // Pausing and resuming the game by clicking on the button "Pause" or "Resume"
-document.getElementById("pause").onclick = () => {
+elements("pause").onclick = () => {
   let innerHTML;
   if (game.run) {
-    innerHTML = document.getElementById("pause").innerHTML;
+    innerHTML = elements("pause").innerHTML;
     if (innerHTML == "Pause") {
       // Pause the game
       game.pause();
@@ -278,7 +285,7 @@ document.getElementById("pause").onclick = () => {
     }
   }
   else {
-    innerHTML = document.getElementById("pause").innerHTML;
+    innerHTML = elements("pause").innerHTML;
     if (innerHTML == "Resume") {
       // Resume the game
       game.resume();
@@ -329,7 +336,6 @@ let lastLap; // Stores the last lp between tFrame and game.tFrameLast to be redu
     // Cancels the animation if the "stop" button in clicked
     } else {
       window.cancelAnimationFrame(cbId);
-      console.log("Game over");
     }
     // Updates game.tFrameLast after every game.update
     game.tFrameLast = tFrame;
@@ -352,233 +358,58 @@ window.onkeyup = (k) => {
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
-document.getElementById("nextRule").onclick = () => {
+elements("nextRule").onclick = () => {
+  const ruleNb = parseInt(elements("ruleNb").innerHTML);
   // Show "previousRule" button
-  document.getElementById("previousRule").disabled = false;
-  document.getElementById("previousRule").style.cursor = "pointer";
-  document.getElementById("previousRule").style.opacity = "1";
+  transition.showButton("previousRule")
   // Update rules number and its animation
-  const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML);
-  document.getElementById("ruleNb").style.animation = "fadeOutDown 0.75s ease-out 0.75s";
-  document.getElementById("ruleNb").style.animationFillMode = "backwards"; 
-  let elm = document.getElementById("ruleNb");
-  let newone = elm.cloneNode(true);
-  elm.parentNode.replaceChild(newone, elm);
-  setTimeout(() => {
-    document.getElementById("ruleNb").style.animation = "fadeInDown 0.75s ease-out 0.75s";
-    document.getElementById("ruleNb").style.animationFillMode = "backwards"; 
-    document.getElementById("ruleNb").innerHTML = ruleNb+1;
-  }, 1000)
+  transition.updateAndAnimate(ruleNb+1, "Down");
   // Toggle rule page
-    document.getElementById("ruleAd"+ruleNb).style.opacity = "0";
-    document.getElementById("ruleAd"+ruleNb).style.animation = "zoomOut 0.75s ease-out 0.75s";
-    document.getElementById("ruleAd"+ruleNb).style.animationFillMode = "backwards"; 
-    // elm = document.getElementById("ruleAd"+ruleNb);
-    // newone = elm.cloneNode(true);
-    // elm.parentNode.replaceChild(newone, elm);
-
-    setTimeout(() => {
-      document.getElementById("ruleAd"+ruleNb).style.display = "none";
-    }, 1000)
-
-  document.getElementById("ruleAd"+(ruleNb+1)).style.animation = "slideInLeft 0.75s ease-out 0.75s";
-  document.getElementById("ruleAd"+(ruleNb+1)).style.animationFillMode = "backwards"; 
-  // elm = document.getElementById("ruleAd"+(ruleNb+1));
-  // newone = elm.cloneNode(true);
-  // elm.parentNode.replaceChild(newone, elm);
-  setTimeout(() => {
-    document.getElementById("ruleAd"+(ruleNb+1)).style.display = "flex";
-    setTimeout(() => {
-      document.getElementById("ruleAd"+(ruleNb+1)).style.opacity = "1";
-    }, 700)
-  }, 1000)
-
-  // Hide "nextRule" button, "skipRules" button, "rulesAd title" and "rulesNb" if last page
+  transition.hideElements(["ruleAd"+ruleNb], "zoomOut")
+  transition.showElements(["ruleAd"+(ruleNb+1)], "slideInLeft")
+  // skip rule if last page
   if (ruleNb+1 == 4) {
-    // Hide "nextRule" button
-    document.getElementById("nextRule").disabled = true;
-    document.getElementById("nextRule").style.cursor = "auto";
-    document.getElementById("nextRule").style.opacity = "0";
-    // Hide "skipRules" button
-    document.getElementById("skipRules").disabled = true;
-    document.getElementById("skipRules").style.cursor = "auto";
-    document.getElementById("skipRules").style.opacity = "0";
-    // Hide "RulesAdTitle"
-    document.getElementById("rulesAdTitle").style.opacity = "0";
-    document.getElementById("rulesAdTitle").style.animation = "zoomOut 0.75s ease-out 0.75s";
-    document.getElementById("rulesAdTitle").style.animationFillMode = "backwards"; 
-    // elm = document.getElementById("rulesAdTitle");
-    // newone = elm.cloneNode(true);
-    // elm.parentNode.replaceChild(newone, elm);
-    // Hide "rulesNb"
-    document.getElementById("rulesNb").style.opacity = "0";
-    document.getElementById("rulesNb").style.animation = "zoomOut 0.75s ease-out 0.75s";
-    document.getElementById("rulesNb").style.animationFillMode = "backwards"; 
-    // elm = document.getElementById("rulesNb");
-    // newone = elm.cloneNode(true);
-    // elm.parentNode.replaceChild(newone, elm);
-
-    // Flex instead of inline for pick a level page
-    document.getElementById("ruleAd"+(ruleNb+1)).style.animation = "slideInLeft 0.75s ease-out 0.75s";
-    document.getElementById("ruleAd"+(ruleNb+1)).style.animationFillMode = "backwards"; 
-    // elm = document.getElementById("ruleAd"+(ruleNb+1));
-    // newone = elm.cloneNode(true);
-    // elm.parentNode.replaceChild(newone, elm);
-    setTimeout(() => {
-      document.getElementById("ruleAd"+(ruleNb+1)).style.display = "flex";
-      setTimeout(() => {
-        document.getElementById("ruleAd"+(ruleNb+1)).style.opacity = "1";
-      }, 700)
-    }, 1000);
+    transition.skipRules();
   }
 }
 
-document.getElementById("previousRule").onclick = () => {
-  let elm, newone;
-  const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML);
+elements("previousRule").onclick = () => {
+  const ruleNb = parseInt(elements("ruleNb").innerHTML);
   // Update rules number and its animation
-    document.getElementById("ruleNb").style.animation = "fadeOutUp 0.75s ease-out 0.75s";
-    document.getElementById("ruleNb").style.animationFillMode = "backwards"; 
-    elm = document.getElementById("ruleNb");
-    newone = elm.cloneNode(true);
-    elm.parentNode.replaceChild(newone, elm);
-  
-    setTimeout(() => {
-      document.getElementById("ruleNb").style.animation = "fadeInUp 0.75s ease-out 0.75s";
-      document.getElementById("ruleNb").style.animationFillMode = "backwards"; 
-      document.getElementById("ruleNb").innerHTML = ruleNb-1;
-    }, 1000)
-  
+  transition.updateAndAnimate(ruleNb-1, "Up");
   // Hide "previousRule" button if first page
   if (ruleNb-1 == 1) {
-    document.getElementById("previousRule").disabled = true;
-    document.getElementById("previousRule").style.cursor = "auto";
-    document.getElementById("previousRule").style.opacity = "0";
+    transition.hideButton("previousRule");
   }
   // Toggle rule page
-  document.getElementById("ruleAd"+ruleNb).style.animation = "slideOutLeft 0.75s ease-out 0.75s";
-  document.getElementById("ruleAd"+ruleNb).style.animationFillMode = "backwards"; 
-  // elm = document.getElementById("ruleAd"+ruleNb);
-  // newone = elm.cloneNode(true);
-  // elm.parentNode.replaceChild(newone, elm);
-  setTimeout(() => {
-    document.getElementById("ruleAd"+ruleNb).style.opacity = "0";
-    document.getElementById("ruleAd"+ruleNb).style.display = "none";
-  }, 1000)
-  document.getElementById("ruleAd"+(ruleNb-1)).style.animation = "zommIn 0.75s ease-out 0.75s";
-  document.getElementById("ruleAd"+(ruleNb-1)).style.animationFillMode = "backwards"; 
-  // elm = document.getElementById("ruleAd"+(ruleNb-1));
-  // newone = elm.cloneNode(true);
-  // elm.parentNode.replaceChild(newone, elm);
-  setTimeout(() => {
-    document.getElementById("ruleAd"+(ruleNb-1)).style.display = "flex";
-    setTimeout(() => {
-      document.getElementById("ruleAd"+(ruleNb-1)).style.opacity = "1";
-    }, 700)
-  }, 1000)
+  transition.hideElements(["ruleAd"+ruleNb], "slideOutLeft")
+  transition.showElements(["ruleAd"+(ruleNb-1)], "zoomIn")
   // Show "nextRule" button, "skipRules" button, "rulesAd title" and "rulesNb" if last page
   if (ruleNb-1 == 3) {
     // Show "nextRule" button
-    document.getElementById("nextRule").disabled = false;
-    document.getElementById("nextRule").style.cursor = "pointer";
-    document.getElementById("nextRule").style.opacity = "1";
-    //
+    transition.showButton("nextRule");
     // Show "skipRules" button
-    document.getElementById("skipRules").disabled = false;
-    document.getElementById("skipRules").style.cursor = "pointer";
-    document.getElementById("skipRules").style.opacity = "1";
-    // Show "rulesAdTilte"
-    document.getElementById("rulesAdTitle").style.opacity = "1";
-    document.getElementById("rulesAdTitle").style.animation = "zoomIn 0.75s ease-out 0.75s";
-    document.getElementById("rulesAdTitle").style.animationFillMode = "backwards"; 
-    // elm = document.getElementById("rulesAdTitle");
-    // newone = elm.cloneNode(true);
-    // elm.parentNode.replaceChild(newone, elm);
-    // Show "rulesNb"
-    document.getElementById("rulesNb").style.opacity = "1";
-    document.getElementById("rulesNb").style.animation = "zoomIn 0.75s ease-out 0.75s";
-    document.getElementById("rulesNb").style.animationFillMode = "backwards"; 
-    elm = document.getElementById("rulesNb");
-    // newone = elm.cloneNode(true);
-    // elm.parentNode.replaceChild(newone, elm);
-    // document.getElementById("ruleNb").innerHTML = ruleNb-1;
-
+    transition.showButton("skipRules")
+    // Show "rulesAdTilte" and "rulesNb"
+    transition.showElements(["rulesAdTitle", "rulesNb"], "zoomIn")
   }
 }
 
-document.getElementById("skipRules").onclick = () => {
-  let elm, newone;
-  const ruleNb = parseInt(document.getElementById("ruleNb").innerHTML);
-  // Show "previousRule" button
-  document.getElementById("previousRule").disabled = false;
-  document.getElementById("previousRule").style.cursor = "pointer";
-  document.getElementById("previousRule").style.opacity = "1";
-  // Hide "nextRule" and "skipRules" buttons
-  document.getElementById("skipRules").disabled = true;
-  document.getElementById("skipRules").style.cursor = "auto";
-  document.getElementById("skipRules").style.opacity = "0";
+elements("skipRules").onclick = () => transition.skipRules();
 
-  document.getElementById("nextRule").disabled = true;
-  document.getElementById("nextRule").style.cursor = "auto";
-  document.getElementById("nextRule").style.opacity = "0";
-
-  // Hide "RulesAdTitle"
-  document.getElementById("rulesAdTitle").style.opacity = "0";
-  document.getElementById("rulesAdTitle").style.animation = "zoomOut 0.75s ease-out 0.75s";
-  document.getElementById("rulesAdTitle").style.animationFillMode = "backwards"; 
-  // elm = document.getElementById("rulesAdTitle");
-  // newone = elm.cloneNode(true);
-  // elm.parentNode.replaceChild(newone, elm);
-
-  // Hide "rulesNb"
-  document.getElementById("rulesNb").style.opacity = "0";
-  document.getElementById("rulesNb").style.animation = "zoomOut 0.75s ease-out 0.75s";
-  document.getElementById("rulesNb").style.animationFillMode = "backwards"; 
-
-  // elm = document.getElementById("rulesNb");
-  // newone = elm.cloneNode(true);
-  // elm.parentNode.replaceChild(newone, elm);
-
-  // Toggle rule page
-  document.getElementById("ruleAd"+ruleNb).style.opacity = "0";
-  document.getElementById("ruleAd"+ruleNb).style.animation = "zoomOut 0.75s ease-out 0.75s";
-  document.getElementById("ruleAd"+ruleNb).style.animationFillMode = "backwards"; 
-  // elm = document.getElementById("ruleAd"+ruleNb);
-  // newone = elm.cloneNode(true);
-  // elm.parentNode.replaceChild(newone, elm);
-
-  setTimeout(() => {
-    document.getElementById("ruleAd"+ruleNb).style.display = "none";
-    document.getElementById("ruleNb").innerHTML = 4;
-  }, 1000)
-
-  document.getElementById("ruleAd4").style.animation = "slideInLeft 0.75s ease-out 0.75s";
-  document.getElementById("ruleAd4").style.animationFillMode = "backwards"; 
-  // elm = document.getElementById("ruleAd4");
-  // newone = elm.cloneNode(true);
-  // elm.parentNode.replaceChild(newone, elm);
-  setTimeout(() => {
-    document.getElementById("ruleAd4").style.display = "flex";
-    setTimeout(() => {
-      document.getElementById("ruleAd4").style.opacity = "1";
-    }, 700)
-  }, 1000)
-}
-
-document.getElementById("ready").onclick = () => {
-  console.log("ran")
+elements("ready").onclick = () => {
   // Set game.level according to the form
   game.level = parseInt(getRadioCheckedValue("level"));
-  document.getElementById("levelInput").value = game.level + "/3"
+  elements("levelInput").value = game.level + "/3"
   //Hide "previousLevel" or "nextLevel" buttons if game.level = 1 or 3 respectively
   if (game.level == 1)
-    document.getElementById("previousLevel").style.visibility = "hidden";
+    transition.hideButton("previousLevel");
   else if (game.level == 3)
-    document.getElementById("nextLevel").style.visibility = "hidden";
-  //
-  document.getElementById("rules").style.display = "none";
-  //
-  document.getElementById("game").style.visibility = "visible";
+    transition.hideButton("nextLevel");
+  // Hide the rules interface
+  transition.hideElements(["rules"], "zoomOut");
+  // Show the game interface
+  transition.showElements(["game"], "slideInDown");
 }
 
 
@@ -591,13 +422,3 @@ const getRadioCheckedValue = radio_name => {
   }
   return '';
 }
-
-
-
-
-
-
-
-
-
-
