@@ -32,8 +32,14 @@ class Sprite {
           this.speedY=speedY*2 + "px/s";
         }
         else if (level == 3) {
-          this.speedX=speedX*4 + "px/s";
-          this.speedY=speedY*4 + "px/s";
+          if (window.innerWidth > 600) {
+            this.speedX=speedX*4 + "px/s";
+            this.speedY=speedY*4 + "px/s";
+          }
+          else { // window.innerWidth < 600
+            this.speedX=speedX + "px/s";
+            this.speedY=speedY + "px/s";
+          }
         }
         else {
           this.speedX=speedX + "px/s";

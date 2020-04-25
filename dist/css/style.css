@@ -1,3 +1,7 @@
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+
+@import "./mediaQuery.css";
+
 * {
   margin: 0;
   padding: 0;
@@ -6,14 +10,19 @@
 *,
 *::before,
 *::after {
-  box-sizing: inherit; }
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit; }
 
 html {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-size: 62.5%; }
   @media only screen and (max-width: 68.75em) {
     html {
       font-size: 50%; } }
+  @media only screen and (max-width: 27.5em) {
+    html {
+      font-size: 40%; } }
 
 body {
   position: relative;
@@ -23,7 +32,24 @@ body {
   background-color: #ccc;
   height: 90vh;
   margin: 5vh auto 0 auto;
-  width: 60vw;
+  width: 62vw;
+  } 
+  @media only screen and (max-width: 77em) {
+    #rules {
+      width: 70vw;
+  }
+  }
+  @media only screen and (max-width: 60.25em) {
+    #rules {
+      height: 100vh;
+      margin: 0 auto 0 auto;
+      width: 90vw;
+    }
+  }
+  @media only screen and (max-width: 47.25em) {
+    #rules {
+      width: 100vw;
+    }
 }
 
 #rulesImg {
@@ -32,7 +58,11 @@ body {
 }
 
 #rulesText {
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 52%;
   position: relative;
@@ -45,36 +75,66 @@ body {
 }
 
 #ruleAd1, #ruleAd2, #ruleAd3, #ruleAd4 {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   opacity: 0;
+  -webkit-transition: opacity .5s;
+  -o-transition: opacity .5s;
   transition: opacity .5s;
 }
 
 #ruleAd1 {opacity: 1;}
-#ruleAd4 {flex-direction: row;}
+#ruleAd2 {margin-left: 3rem;}
+#ruleAd3 {margin-left: 5rem;}
+#ruleAd4 {-webkit-box-orient: horizontal;-webkit-box-direction: normal;-ms-flex-direction: row;flex-direction: row;}
 
 
-#ruleAd2, #ruleAd3, #ruleAd4 {
-  display: none;
-}
+#ruleAd2, #ruleAd3, #ruleAd4 {display: none;}
 
 #rulesAdTitle, #pickLevelTitle {
   font-size: 4rem;
   margin-left: 1rem;
   opacity: 1;
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
   transition: all 1s;
 }
 
-p {
+.ruleAdLine {
   display: inline;
-  font-size: 2rem;
+  font-size: 1.6rem;
+  font-size-adjust: .51;
+  line-height: 2.8;
+  }
+  @media only screen and (max-width: 68.65em) {
+    .ruleAdLine {
+        font-size: 1.8rem;
+        line-height: 2;
+    }
 }
 
-.rulesEnemiesImg {
+.ruleAdLineNoBreak {
+  display: inline;
+  font-size: 1.8rem;
+  font-size-adjust: .51;
+  margin-bottom: -1rem;
+}
+
+.rulesSpritesImg {
   height: 4rem;
-  transform: translate(0, 1rem);
+  -webkit-transform: translate(0, 1rem);
+      -ms-transform: translate(0, 1rem);
+          transform: translate(0, 1rem);
   width: 4rem;
+}
+
+#rulesSpritesSickImg {
+  filter: saturate(8);
 }
 
 .pickLevelRadioInput {
@@ -112,16 +172,23 @@ p {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     background-color: rgb(226, 184, 76);
     opacity: 0;
+    -webkit-transition: opacity .5s;
+    -o-transition: opacity .5s;
     transition: opacity .5s;
 }
 
 #ready {
-  animation-duration: 4s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  -webkit-animation-duration: 4s;
+          animation-duration: 4s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
   background-color: rgb(226, 184, 76);
   border: none;
   border-radius: 15px;
@@ -138,13 +205,17 @@ p {
 }
 
 #rulesNb {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
 #ruleNb {
-  animation: fadeInDown 0.75s ease-out 0.75s;
-  animation-fill-mode: backwards;
-  margin-left: 3rem;
+  -webkit-animation: fadeInDown 0.75s ease-out 0.75s;
+          animation: fadeInDown 0.75s ease-out 0.75s;
+  -webkit-animation-fill-mode: backwards;
+          animation-fill-mode: backwards;
+  margin-left: 1.5rem;
   white-space: nowrap;
 }
 
@@ -156,9 +227,13 @@ p {
 
 
 #rulesButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 10%;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   width: 100%;
 }
 
@@ -172,6 +247,8 @@ p {
   margin: 1rem;
   padding: 3px 9px;
   text-align: center;
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
   transition: all 1s;
   width: 8rem;
 }
@@ -198,6 +275,7 @@ p {
   background-image: url("/img/sw3.jpg");
   height: 100vh;
   position: relative;
+  transition: width 1s;
   width: 80vw;
 }
 
@@ -205,7 +283,10 @@ p {
   background-color: rgb(226, 184, 76);
   border-radius: 15px;
   display: none;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   font-size: 3rem;
   left: 50%;
   opacity: 0;
@@ -213,7 +294,9 @@ p {
   position: absolute;
   text-align: center;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 #finalScore {
@@ -221,6 +304,7 @@ p {
 }
 
 #copyright {
+  color: #fff;
   font-size: 15px;
   margin-bottom: 5px;
   margin-right: 5px;
@@ -230,13 +314,23 @@ p {
 }
 
 #controlPanel {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   font-size: large;
   height: 100vh;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: auto;
   text-align: center;
+  transition: all 1s;
+  width: 20vw;
+  z-index: 99;
 }
 
 #timeLeft {
@@ -254,46 +348,89 @@ p {
 #scoreInput, #timeLeftInput, #levelInput {
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   display: block;
   font-size: large;
   margin: 2rem auto 2rem auto;
   text-align: center;
   font-weight: bold;
-  padding: 12px 20px;
+  padding: 1.75rem 1.25rem;
   width: 50%;
+  }
+  @media only screen and (max-width: 56.25em) {
+    #scoreInput, #timeLeftInput, #levelInput {
+      font-size: 1.2rem;
+      margin: 1rem auto 1rem auto;
+      padding: 1.5rem 1rem;
+    }
 }
 
 #startPauseDiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  }
+  @media only screen and (max-width: 56.25em) {
+    #startPauseDiv {
+      flex-direction: column;
+      align-items: center;
+      width: 75%;
+      margin: auto;
+    }
 }
 
+
 #start, #pause, #previousLevel, #nextLevel {
-  animation-duration: 5s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  -webkit-animation-duration: 5s;
+          animation-duration: 5s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
   background-color: #f1f1f1;
   border: none;
   border-radius: 5px;
   color: black;
   cursor: pointer;
   font-size: 2rem;
-  padding: 16px 30px;
+  padding: 2rem 2.5rem;
   text-align: center;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
   transition: all .3s;
 }
 
 #start, #pause {
   background-color: rgb(226, 184, 76);
   margin-top: 3rem;
+  }
+  @media only screen and (max-width: 56.25em) {
+    #start, #pause {
+      margin: 1rem;
+    }
+  }
+  @media only screen and (max-width: 37.5em) {
+    #start, #pause {
+      padding: 1.5rem 1.5rem;
+    }
 }
 
 #pause {
   display: none;
   margin-left: 1rem;
   opacity: 0;
+  }
+  @media only screen and (max-width: 56.25em) {
+    #pause {
+      margin-top: 3rem;
+    }
 }
+  
 
 #previousLevel, #nextLevel {
   font-size: 1.5rem;
@@ -304,5 +441,3 @@ p {
   background-color: black;
   color: white;
 }
-
-

@@ -4,12 +4,12 @@ import * as spriteView from "./views/spriteView"
 import * as positionView from "./views/positionView"
 import {game} from "./index"
 
-const elem = document.getElementById("playground");
-const style = window.getComputedStyle(elem)
-const width = parseInt(style.width) - 100;
-const height = parseInt(style.height) - 100;
-
 export const startLevel = level => {
+    const elem = document.getElementById("playground");
+    const style = window.getComputedStyle(elem)
+    const width = parseInt(style.width) - 100;
+    const height = parseInt(style.height) - 100;
+
     if (level == 1) {
         let R2D2 = new Sprite("R2D2", new Position(0,0));
         spriteView.renderSprite(R2D2);
@@ -23,11 +23,11 @@ export const startLevel = level => {
         spriteView.renderSprite(naboo_starfighter);
         game.enemies[game.enemies.length]=naboo_starfighter;
 
-        let obi_wan_starfighter = new Sprite("obi_wan_starfighter", new Position(700,0));
+        let obi_wan_starfighter = new Sprite("obi_wan_starfighter", new Position(width*2/3,0));
         spriteView.renderSprite(obi_wan_starfighter);
         game.enemies[game.enemies.length]=obi_wan_starfighter;
 
-        let x_wing = new Sprite("x_wing", new Position(150,150));
+        let x_wing = new Sprite("x_wing", new Position(width/5,height/3));
         spriteView.renderSprite(x_wing);
         game.enemies[game.enemies.length]=x_wing;
 
@@ -45,11 +45,11 @@ export const startLevel = level => {
         spriteView.renderSprite(naboo_starfighter2);
         game.enemies[game.enemies.length]=naboo_starfighter2;
     
-        let obi_wan_starfighter2 = new Sprite("obi_wan_starfighter", new Position(500, 80), 2);
+        let obi_wan_starfighter2 = new Sprite("obi_wan_starfighter", new Position(width/2, height/4), 2);
         spriteView.renderSprite(obi_wan_starfighter2);
         game.enemies[game.enemies.length]=obi_wan_starfighter2;
     
-        let x_wing2 = new Sprite("x_wing", new Position(200, height), 2);
+        let x_wing2 = new Sprite("x_wing", new Position(width/4, height), 2);
         spriteView.renderSprite(x_wing2);
         game.enemies[game.enemies.length]=x_wing2;
     
@@ -71,11 +71,11 @@ export const startLevel = level => {
         spriteView.renderSprite(naboo_starfighter3);
         game.enemies[game.enemies.length]=naboo_starfighter3;
 
-        let obi_wan_starfighter3 = new Sprite("obi_wan_starfighter", new Position(200, 400), 3);
+        let obi_wan_starfighter3 = new Sprite("obi_wan_starfighter", new Position(width/4, height/6), 3);
         spriteView.renderSprite(obi_wan_starfighter3);
         game.enemies[game.enemies.length]=obi_wan_starfighter3;
 
-        let x_wing3 = new Sprite("x_wing", new Position(500, 100), 3);
+        let x_wing3 = new Sprite("x_wing", new Position(width/(1.75), height/5), 3);
         spriteView.renderSprite(x_wing3);
         game.enemies[game.enemies.length]=x_wing3;
 
@@ -83,7 +83,7 @@ export const startLevel = level => {
         spriteView.renderSprite(darthvader4);
         game.enemies[game.enemies.length]=darthvader4;
 
-        let darthvader5 = new Sprite("darthvader", new Position(400,height), 3);
+        let darthvader5 = new Sprite("darthvader", new Position(width/(2.2),height), 3);
         spriteView.renderSprite(darthvader5);
         game.enemies[game.enemies.length]=darthvader5;
     }

@@ -18,7 +18,7 @@ export const showElements = (elementsIds, sens) => {
         elements(elementId).style.animationFillMode = "backwards";
         if (elementId.includes("rulesAdTitle"))
             elements(elementId).style.opacity = "1";
-        else if (elementId == "endGame") {
+        else if (elementId == "endGame" || elementId == "controlPanel") {
             elements(elementId).style.opacity = "1";
             elements(elementId).style.display = "flex";
             elements(elementId).style.animation = sens + " 1s ease-out";
@@ -38,9 +38,11 @@ export const hideElements = (elementsIds, sens) => {
     elementsIds.forEach(elementId => {
         elements(elementId).style.animation = sens + " 0.75s ease-out 0.75s";
         elements(elementId).style.animationFillMode = "backwards"; 
-        if (sens == "zoomOut" || sens == "fadeOut")
+        if (sens == "zoomOut" || sens.includes("fadeOut"))
             elements(elementId).style.opacity = "0";
-        if (sens == "fadeOut")
+        // if (elementId == "controlPanel")
+        //     elements(elementId).style.display = "none";
+        if (sens.includes("fadeOut"))
             elements(elementId).style.animation = sens + " 0.75s ease-out 0s";
         if (elementId.includes("ruleAd") || elementId == "rules") {
             setTimeout(() => {
@@ -53,18 +55,24 @@ export const hideElements = (elementsIds, sens) => {
 }
 
 export const updateAndAnimate = (ruleNb, sens) => {
-    elements("ruleNb").style.animation = "fadeOut" + sens + " 0.75s ease-out 0.75s";
-    elements("ruleNb").style.animationFillMode = "backwards"; 
-    // the 3 commented code lines below had to exist with document.getElemntById("ruleNb")
-    // But had to be removed with elments.ruleNb !!
-    // let elm = elements(ruleNb);
-    // let newone = elm.cloneNode(true);
-    // elm.parentNode.replaceChild(newone, elm);
-    setTimeout(() => {
-        elements("ruleNb").style.animation = "fadeIn" + sens + " 0.75s ease-out 0.75s";
-        elements("ruleNb").style.animationFillMode = "backwards"; 
+    if (ruleNb == 3 && sens == "Up") {
         elements("ruleNb").innerHTML = ruleNb;
-    }, 1000)
+        elements("rulesNb").style.opacity = "1";
+    }
+    else {
+        elements("ruleNb").style.animation = "fadeOut" + sens + " 0.75s ease-out 0.75s";
+        elements("ruleNb").style.animationFillMode = "backwards"; 
+        // the 3 commented code lines below had to exist with document.getElemntById("ruleNb")
+        // But had to be removed with elments.ruleNb !!
+        // let elm = elements(ruleNb);
+        // let newone = elm.cloneNode(true);
+        // elm.parentNode.replaceChild(newone, elm);
+        setTimeout(() => {
+            elements("ruleNb").style.animation = "fadeIn" + sens + " 0.75s ease-out 0.75s";
+            elements("ruleNb").style.animationFillMode = "backwards"; 
+            elements("ruleNb").innerHTML = ruleNb;
+        }, 1000)
+    }
 }
 
 export const skipRules = () =>  {

@@ -12,12 +12,14 @@
     // time out done
     // 0 enemies done
 //
-// Transition fade in start  done half
+// Transition fade in start  done
+// Responsive done
+// Change robot speed ! done
+//
+// sickRobot
 // Robot class
-// Change robot speed !
 // Sound effects
 // Heroku/ mywebsite
-// Responsive
 
 
 import Position from "./models/Position"
@@ -55,7 +57,23 @@ export const game = new class {
     this.score=score;
     this.time=time;
   }
-  start() {
+  async start() {
+    // Hide the control panel and widen the playgound if window.innerWidth < 900
+    let promise = new Promise((res, rej) => {
+      if (window.innerWidth < 900) {
+        // transition.hideElements(["controlPanel"], "fadeOutRight")
+        elements("controlPanel").style.width = "0vw";
+        elements("playground").style.width = "100vw";
+        setTimeout(() => {
+          elements("controlPanel").style.display = "none";
+        }, 200);
+        setTimeout(() => {
+          res(true);
+        }, 1000);
+      }
+      else res(false);
+    });
+    await promise
     // Demarrage du jeux  
     this.run = true;    
     startGame.startLevel(this.level)
@@ -68,9 +86,11 @@ export const game = new class {
   stop() {
     game.run=false;
     // Remove the robot
-    const elem = document.getElementById(this.robot.id);
-    elem.parentNode.removeChild(elem);
-    this.robot = null;
+    if (this.robot) {
+      const elem = document.getElementById(this.robot.id);
+      elem.parentNode.removeChild(elem);
+      this.robot = null;
+    }
     // Remove enemies
     this.enemies.forEach(enemy => {
       spriteView.removeSprite(enemy.id)
@@ -100,13 +120,46 @@ export const game = new class {
     this.start(); 
   }
 
-  pause() {
+  async pause() {
+    // Show the control panel if hidden and tighten the playgound
+    let promise = new Promise((res, rej) => {
+      if (elements("controlPanel").style.width == "0vw") {
+        // transition.hideElements(["controlPanel"], "fadeOutRight")
+        elements("controlPanel").style.width = "20vw";
+        elements("playground").style.width = "80vw";
+        setTimeout(() => {
+          elements("controlPanel").style.display = "flex";
+        }, 400);
+        setTimeout(() => {
+          res(true);
+        }, 1000);
+      }
+      else res(false);
+    });
+    await promise;
+
     this.run = false;
     // Pause the time
     controlPanelView.pauseTime();
   }
 
-  resume() {
+  async resume() {
+    // Hide the control panel if window.innerWidth < 900
+    let promise = new Promise((res, rej) => {
+      if (window.innerWidth < 900) {
+        // transition.hideElements(["controlPanel"], "fadeOutRight")
+        elements("controlPanel").style.width = "0vw";
+        elements("playground").style.width = "100vw";
+        setTimeout(() => {
+          elements("controlPanel").style.display = "none";
+        }, 200);
+        setTimeout(() => {
+          res(true);
+        }, 1000);
+      }
+      else res(false);
+    });
+    await promise
     // Resume the game animation
     this.run = true;
     main(0, true);
@@ -164,13 +217,24 @@ export const game = new class {
     let lap = tFrame - this.tFrameLast ;//< 20 ? tFrame - this.tFrameLast : 17;
     
     // Update Arrows values on keydown
-    window.onkeydown = (k) => {
-      const arrowsValues = positionView.updateArrowsValues(k);
-      this.arrowLeft = arrowsValues[0];
-      this.arrowUp = arrowsValues[1];
-      this.arrowRight = arrowsValues[2];
-      this.arrowDown = arrowsValues[3];
-    }
+    document.addEventListener('keydown', event => {
+      if (event.key === "ArrowLeft" || event.key === "ArrowUp" || event.key === "ArrowRight" || event.key === "ArrowDown"){
+        const arrowsValues = positionView.updateArrowsValues(event.key);
+        this.arrowLeft = arrowsValues[0];
+        this.arrowUp = arrowsValues[1];
+        this.arrowRight = arrowsValues[2];
+        this.arrowDown = arrowsValues[3];
+      }
+    });
+
+    //
+    document.addEventListener('keydown', event => {
+      if (window.innerWidth < 900 && event.key === "Escape") {
+        game.pause();
+        // Toggle buttons
+        controlPanelView.toggleButtons("pause");
+      }
+    });
 
     // Update the robot position
     if (this.robot) {
@@ -232,7 +296,7 @@ export const game = new class {
 // Changing level
 elements("nextLevel").onclick = () => {
   transition.hideElements(["endGame"], "fadeOut")
-  if (game.run && game.robot)
+  if (game.robot)
     game.stop();
   game.level += 1;
   elements("levelInput").value = game.level + "/3"
@@ -244,7 +308,7 @@ elements("nextLevel").onclick = () => {
 
 elements("previousLevel").onclick = () => {
   transition.hideElements(["endGame"], "fadeOut")
-  if (game.run && game.robot)
+  if (game.robot)
     game.stop();
   game.level -= 1;
   elements("levelInput").value = game.level + "/3"
@@ -422,3 +486,4 @@ const getRadioCheckedValue = radio_name => {
   }
   return '';
 }
+

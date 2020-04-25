@@ -31,13 +31,13 @@
 // }
 export const updateArrowsValues = k => {
     let arrows;
-    if (k.key == "ArrowLeft")
+    if (k == "ArrowLeft")
         arrows = [true, false, false, false];
-    else if (k.key == "ArrowUp") 
+    else if (k == "ArrowUp") 
         arrows = [false, true, false, false];
-    else if (k.key == "ArrowRight") 
+    else if (k == "ArrowRight") 
         arrows = [false, false, true, false];
-    else if (k.key == "ArrowDown") 
+    else if (k == "ArrowDown") 
         arrows = [false, false, false, true];  
     return arrows;
 }
