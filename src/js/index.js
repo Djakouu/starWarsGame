@@ -15,11 +15,14 @@
 // Transition fade in start  done
 // Responsive done
 // Change robot speed ! done
-//
-// sickRobot
-// Robot class
+
+// Stop on resize window
 // Sound effects
 // Heroku/ mywebsite
+// Comments 
+// Orga
+// Robot class
+
 
 
 import Position from "./models/Position"
@@ -27,7 +30,7 @@ import Robot from "./models/Robot"
 import * as spriteView from "./views/spriteView"
 import * as positionView from "./views/positionView"
 import * as controlPanelView from "./views/controlPanelView"
-import * as startGame from "./startGame"
+import * as startGame from "./controlers/startGame"
 import * as transition from "./views/transition"
 import { elements } from "./views/base"
 
