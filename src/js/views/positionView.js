@@ -30,17 +30,15 @@
 //     return move;
 // }
 export const updateArrowsValues = k => {
-    let arrows;
-    if (k == "ArrowLeft")
-        arrows = [true, false, false, false];
-    else if (k == "ArrowUp") 
-        arrows = [false, true, false, false];
-    else if (k == "ArrowRight") 
-        arrows = [false, false, true, false];
-    else if (k == "ArrowDown") 
-        arrows = [false, false, false, true];  
-    return arrows;
+return {
+    ArrowLeft: k == "ArrowLeft",
+    ArrowUp: k == "ArrowUp",
+    ArrowRight: k == "ArrowRight",
+    ArrowDown: k == "ArrowDown"
+    }
+    
 }
+
 
 export const updateRobotPosition = (arrows, robot) => {
     const PGstyle = window.getComputedStyle(document.getElementById("playground"));
@@ -50,19 +48,19 @@ export const updateRobotPosition = (arrows, robot) => {
     const robotY2 = robotY1 + parseInt(document.getElementById(robot.id).style.height);
     let move;
     const step = 1;
-    if (arrows[0]) {
+    if (arrows["ArrowLeft"]) {
         if (robotX1 - step >= 0)
             move = {stepX: -step, stepY: 0}
     }
-    else if (arrows[1]) {
+    else if (arrows["ArrowUp"]) {
         if (robotY1 - step >= 0)
             move = {stepX: 0, stepY: -step}
     }
-    else if (arrows[2]) {
+    else if (arrows["ArrowRight"]) {
         if (robotX2 + step <= parseInt(PGstyle.width)) 
             move = {stepX: step, stepY: 0}
     }
-    else if (arrows[3]) {
+    else if (arrows["ArrowDown"]) {
         if (robotY2 + step <= parseInt(PGstyle.height))
             move = {stepX: 0, stepY: step}
     }
